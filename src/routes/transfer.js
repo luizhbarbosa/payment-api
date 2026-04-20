@@ -1,8 +1,12 @@
-import { Router } from 'express';
-import { makeTransfer } from '../controllers/transferController.js';
+// src/app.js
+import express from 'express';
+import transferRoutes from './routes/transfer.js';
 
-const router = Router();
+const app = express();
 
-router.post('/', makeTransfer);
+app.use(express.json());
 
-export default router;
+// 👇 ESSENCIAL
+app.use('/transfer', transferRoutes);
+
+export default app;

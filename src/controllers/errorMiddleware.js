@@ -1,18 +1,22 @@
 /**
- * Middleware centralizado para tratamento de erros
- */
-export const errorMiddleware = (err, req, res, next) => {
-  // Define o status code: usa o definido no erro ou 500 para erro interno
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Erro interno do servidor';
+ *// src/middlewares/errorMiddleware.js
 
-  // Log do erro no servidor (útil para debug em erros 500)
+export const errorMiddleware = (err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const message =
+    statusCode === 500 && isProduction
+      ? 'Erro interno do servidor'
+      : err.message || 'Erro inesperado';
+
   if (statusCode === 500) {
-    console.error(`[SERVER ERROR]: ${err.stack}`);
+    console.error('[SERVER ERROR]:', err.stack || err.message);
   }
 
-  res.status(statusCode).json({
+  return res.status(statusCode).json({
     status: statusCode,
     error: message,
+    timestamp: new Date().toISOString(),
   });
 };
