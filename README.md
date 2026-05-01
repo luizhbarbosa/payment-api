@@ -2,6 +2,22 @@
 
 API Node.js para transferência de valores entre usuários.
 
+## Como Rodar e Testar
+
+1. **Instalação**: `npm install`
+2. **Banco de Dados**: Certifique-se de que as migrations foram aplicadas: `npx prisma migrate dev`
+3. **Iniciar**: `npm start`
+4. **Testar Rota**:
+   ```bash
+   curl -X POST http://localhost:3000/transfer \
+        -H "Content-Type: application/json" \
+        -d '{"value": 100, "payer": 1, "payee": 2}'
+   ```
+5. **Verificar Dados**: Use o Prisma Studio para validar os saldos:
+   ```bash
+   npx prisma studio
+   ```
+
 ## Rotas ativas
 
 ### `POST /transfer`
