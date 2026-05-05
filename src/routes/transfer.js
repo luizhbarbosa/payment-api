@@ -1,12 +1,21 @@
-// src/app.js
-import express from 'express';
-import transferRoutes from './routes/transfer.js';
+import { Router } from 'express';
+// Importe aqui apenas os seus CONTROLLERS, por exemplo:
+// import { transferController } from '../controllers/transferController.js';
 
-const app = express();
+const router = Router();
 
-app.use(express.json());
+/**
+ * @openapi
+ * /transfer:
+ *   post:
+ *     summary: Realiza uma transferência
+ *     description: Rota para processar novos pagamentos.
+ *     responses:
+ *       200:
+ *         description: Sucesso.
+ */
+router.post('/', (req, res) => {
+    // Sua lógica de rota aqui
+});
 
-// 👇 ESSENCIAL
-app.use('/transfer', transferRoutes);
-
-export default app;
+export default router;

@@ -1,5 +1,4 @@
-/**
- *// src/middlewares/errorMiddleware.js
+// src/controllers/errorMiddleware.js
 
 export const errorMiddleware = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;

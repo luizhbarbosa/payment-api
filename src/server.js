@@ -1,7 +1,9 @@
-import app from './app.js';
 
-const PORT = process.env.PORT || 3000;
+import app from './app.js'; // Importa o app que configuramos com Swagger
+
+const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`📖 Documentação em http://localhost:${PORT}/api-docs`);
 });
