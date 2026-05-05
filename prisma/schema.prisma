@@ -10,4 +10,28 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  document  String   @unique
+  email     String   @unique
+  password  String
+  userType  String   // 'user' ou 'merchant'
+  balance   Decimal  @default(0)
+
+  transfersSent     Transfer[] @relation("PayerRelation")
+  transfersReceived Transfer[] @relation("PayeeRelation")
+}
+
+model Transfer {
+  id        Int      @id @default(autoincrement())
+  value     Decimal
+  payerId   Int
+  payeeId   Int
+  createdAt DateTime @default(now())
+  payer     User     @relation("PayerRelation", fields: [payerId], references: [id])
+  payee     User     @relation("PayeeRelation", fields: [payeeId], references: [id])
 }
