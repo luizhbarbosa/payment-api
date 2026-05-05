@@ -1,18 +1,5 @@
-const prisma = {
-	async $transaction(fn) {
-		return fn({
-			user: {
-				async update() {
-					throw new Error('Prisma client not configured for runtime execution');
-				},
-			},
-			transaction: {
-				async create() {
-					throw new Error('Prisma client not configured for runtime execution');
-				},
-			},
-		});
-	},
-};
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient();
 
 module.exports = prisma;

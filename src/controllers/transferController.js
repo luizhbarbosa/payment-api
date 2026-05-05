@@ -1,8 +1,7 @@
 // src/controllers/transferController.js
-
 import { makeTransfer } from '../services/TransferService.js';
 
-export const makeTransfer = async (req, res, next) => {
+export const makeTransferController = async (req, res, next) => {
   const { value, payer, payee } = req.body;
 
   if (value === undefined || typeof value !== 'number' || value <= 0) {
@@ -24,7 +23,7 @@ export const makeTransfer = async (req, res, next) => {
   }
 
   try {
-    const result = await transferMoney({ value, payer, payee });
+    const result = await makeTransfer({ value, payer, payee }); // ✅ corrigido
     return res.status(200).json(result);
   } catch (error) {
     return next(error);

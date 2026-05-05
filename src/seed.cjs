@@ -1,3 +1,4 @@
+require('dotenv').config();
 const prisma = require('./prismaClient.cjs');
 const bcrypt = require('bcrypt');
 

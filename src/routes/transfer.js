@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { makeTransfer } from '../controllers/transferController.js';
+import { makeTransferController } from '../controllers/transferController.js';
 
 const router = Router();
 
@@ -8,11 +8,34 @@ const router = Router();
  * /transfer:
  *   post:
  *     summary: Realiza uma transferência
- *     description: Rota para processar novos pagamentos.
+ *     tags:
+ *       - Transfer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - value
+ *               - payer
+ *               - payee
+ *             properties:
+ *               value:
+ *                 type: number
+ *                 example: 100
+ *               payer:
+ *                 type: number
+ *                 example: 1
+ *               payee:
+ *                 type: number
+ *                 example: 2
  *     responses:
  *       200:
- *         description: Sucesso.
+ *         description: Transferência realizada com sucesso
+ *       400:
+ *         description: Erro de validação
  */
-router.post('/', makeTransfer);
+router.post('/', makeTransferController);
 
 export default router;

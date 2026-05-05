@@ -4,11 +4,18 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import transferRoutes from './routes/transfer.js';
 import { errorMiddleware } from './controllers/errorMiddleware.js';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app = express();
 
-// Configuração do Swagger
+// 🔧 Configuração de caminho (ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 🔧 Swagger config
 const swaggerOptions = {
-  swaggerDefinition: {
+  definition: {
     openapi: '3.0.0',
     info: {
       title: 'Payment API',
@@ -21,19 +28,22 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ['./src/routes/*.js'], 
+  apis: [path.join(__dirname, 'routes/*.js')],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
+// Middlewares
 app.use(express.json());
 
-// Rota da Documentação
+// Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Suas rotas
+// Rotas
 app.use('/transfer', transferRoutes);
 
+// Error handler
 app.use(errorMiddleware);
 
+// ✅ EXPORT CORRETO
 export default app;
