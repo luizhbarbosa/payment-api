@@ -4,7 +4,7 @@ import { UserType } from '../models/User.js';
 import authorizerService from './AuthorizerService.js';
 import notificationService from './NotificationService.js';
 
-export const transferMoney = async ({ value, payer: payerId, payee: payeeId }) => {
+export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) => {
   // ✅ Validação inicial
   if (value <= 0) throw new Error('Valor da transferência deve ser maior que 0');
   if (payerId === payeeId) throw new Error('Não é possível transferir para você mesmo');

@@ -1,6 +1,6 @@
 // src/controllers/transferController.js
 
-import { transferMoney } from '../services/transferService.js';
+import { makeTransfer } from '../services/TransferService.js';
 
 export const makeTransfer = async (req, res, next) => {
   const { value, payer, payee } = req.body;
