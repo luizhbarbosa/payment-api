@@ -1,6 +1,5 @@
 import { Router } from 'express';
-// Importe aqui apenas os seus CONTROLLERS, por exemplo:
-// import { transferController } from '../controllers/transferController.js';
+import { makeTransfer } from '../controllers/transferController.js';
 
 const router = Router();
 
@@ -14,8 +13,6 @@ const router = Router();
  *       200:
  *         description: Sucesso.
  */
-router.post('/', (req, res) => {
-    // Sua lógica de rota aqui
-});
+router.post('/', makeTransfer);
 
 export default router;

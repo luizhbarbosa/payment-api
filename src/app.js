@@ -1,9 +1,8 @@
-
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import transferRoutes from './routes/transfer.js';
-import {errorMiddleware} from './controllers/errorMiddleware.js';
+import { errorMiddleware } from './controllers/errorMiddleware.js';
 
 const app = express();
 
