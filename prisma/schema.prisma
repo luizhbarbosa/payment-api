@@ -5,10 +5,21 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
+}
+
+// 3. Definição da Tabela (adicione isto no final)
+model User {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  document  String   @unique
+  email     String   @unique
+  password  String
+  userType  String
+  balance   Float    @default(0)
+  createdAt DateTime @default(now())
 }
