@@ -35,3 +35,15 @@ model Transfer {
   payer     User     @relation("PayerRelation", fields: [payerId], references: [id])
   payee     User     @relation("PayeeRelation", fields: [payeeId], references: [id])
 }
+
+// 3. Definição da Tabela (adicione isto no final)
+model User {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  document  String   @unique
+  email     String   @unique
+  password  String
+  userType  String
+  balance   Float    @default(0)
+  createdAt DateTime @default(now())
+}
