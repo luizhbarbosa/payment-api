@@ -1,4 +1,4 @@
-// src/seed.cjs
+require('dotenv').config();
 const prisma = require('./prismaCliente.cjs');
 const bcrypt = require('bcrypt');
 
