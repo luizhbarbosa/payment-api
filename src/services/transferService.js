@@ -1,8 +1,8 @@
 import prisma from '../prismaCliente.cjs';
-import userRepository from '../../UserRepository.js';
-import { UserType } from '../../User.js';
+import userRepository from '../repositories/UserRepository.js';
+import { UserType } from '../models/User.js';
 import authorizerService from './AuthorizerService.js';
-import transactionRepository from '../../TransactionRepository.js';
+import transactionRepository from '../repositories/TransactionRepository.js';
 import Transaction from '../models/Transaction.js';
 import notificationService from './NotificationService.js';
 

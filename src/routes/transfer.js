@@ -1,21 +1,29 @@
 import { Router } from 'express';
-// Importe aqui apenas os seus CONTROLLERS, por exemplo:
-// import { transferController } from '../controllers/transferController.js';
+import { createTransfer } from '../controllers/transferController.js';
 
 const router = Router();
 
 /**
- * @openapi
+ * @swagger
  * /transfer:
- *   post:
- *     summary: Realiza uma transferência
- *     description: Rota para processar novos pagamentos.
- *     responses:
- *       200:
- *         description: Sucesso.
+ * post:
+ * summary: Realiza transferencia
+ * requestBody:
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * value:
+ * type: number
+ * payer:
+ * type: integer
+ * payee:
+ * type: integer
+ * responses:
+ * 201:
+ * description: OK
  */
-router.post('/', (req, res) => {
-    // Sua lógica de rota aqui
-});
+router.post('/', createTransfer);
 
 export default router;
