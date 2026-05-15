@@ -21,7 +21,7 @@
   "homepage": "https://github.com/luizhbarbosa/payment-api#readme",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^7.4.1",
+    "@prisma/client": "^5.20.0",
     "@prisma/sdk": "^3.15.2",
     "axios": "^1.13.5",
     "bcrypt": "^6.0.0",
@@ -31,6 +31,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "prisma": "^7.4.1"
+    "prisma": "^5.20.0"
   }
 }
