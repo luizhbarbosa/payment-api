@@ -26,4 +26,12 @@ model User {
   userType  String
   balance   Float    @default(0)
   createdAt DateTime @default(now())
+
+}
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  value     Float
+  payerId   Int
+  payeeId   Int
+  createdAt DateTime @default(now())
 }
