@@ -17,4 +17,5 @@ class UserRepository {
   }
 }
 
+// Exporta
 export default new UserRepository();
