@@ -9,12 +9,10 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
   if (value <= 0) throw new Error('Valor da transferência deve ser maior que 0');
   if (payerId === payeeId) throw new Error('Não é possível transferir para você mesmo');
 
-  // ✅ CORREÇÃO: usar await
-  console.log(`[DEBUG] Tentando transferência: PayerID: ${payerId}, PayeeID: ${payeeId}, Valor: ${value}`);
+  console.log(`[DEBUG] Iniciando transferência: De ${payerId} para ${payeeId}, Valor: ${value}`);
 
   const payer = await userRepository.findById(payerId);
   const payee = await userRepository.findById(payeeId);
-  console.log(`[DEBUG] Resultado busca - Payer: ${!!payer}, Payee: ${!!payee}`);
 
   if (!payer) {
     const error = new Error('Usuário pagador não encontrado');
@@ -28,8 +26,8 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
     throw error;
   }
 
-  // ⚠️ Ajuste aqui conforme seu banco
-  if (payer.userType === UserType.MERCHANT || payer.type === 'MERCHANT') {
+  // ✅ Validação robusta: Garante que lojistas não enviem dinheiro (comparação case-insensitive)
+  if (payer.userType?.toLowerCase() === 'merchant' || payer.userType === UserType.MERCHANT) {
     throw new Error('Lojistas não podem enviar dinheiro');
   }
 
@@ -64,9 +62,7 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
       payer.balance = updatedPayer.balance;
       payee.balance = updatedPayee.balance;
 
-      // ✅ CORREÇÃO: usar tx + await
-      await tx.transaction.create({
-      // ✅ Garantindo que o nome do modelo seja 'transfer' como no seu seed
+      // ✅ Registra a transferência usando o modelo 'transfer' (conforme definido no seu banco/seed)
       await tx.transfer.create({
         data: {
           value,
@@ -93,8 +89,10 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
     return transactionResult;
 
   } catch (error) {
-    payer.balance = initialPayerBalance;
-    payee.balance = initialPayeeBalance;
+    // ✅ Correção: Restaura o estado local apenas se os objetos existirem para evitar TypeError
+    if (payer) payer.balance = initialPayerBalance;
+    if (payee) payee.balance = initialPayeeBalance;
+
     throw error;
   }
 };

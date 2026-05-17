@@ -1,22 +1,25 @@
 // src/controllers/transferController.js
-import { makeTransfer } from '../services/TransferService.js';
+import { makeTransfer } from '../services/transferService.js';
 
 export const makeTransferController = async (req, res, next) => {
-  const { value, payer, payee } = req.body;
+  // ✅ Força a conversão para número para evitar erros de tipo vindo do Swagger/CURL
+  const value = Number(req.body.value);
+  const payer = Number(req.body.payer);
+  const payee = Number(req.body.payee);
 
-  if (value === undefined || typeof value !== 'number' || value <= 0) {
+  if (isNaN(value) || value <= 0) {
     return res.status(400).json({
       error: 'O campo "value" deve ser um número maior que zero.'
     });
   }
 
-  if (!payer || typeof payer !== 'number') {
+  if (!payer || isNaN(payer)) {
     return res.status(400).json({
       error: 'O campo "payer" deve ser um número válido.'
     });
   }
 
-  if (!payee || typeof payee !== 'number') {
+  if (!payee || isNaN(payee)) {
     return res.status(400).json({
       error: 'O campo "payee" deve ser um número válido.'
     });
