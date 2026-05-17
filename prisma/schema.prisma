@@ -4,36 +4,16 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
+  generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["windows"]
 }
+
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  fullName  String
-  document  String   @unique
-  email     String   @unique
-  password  String
-  userType  String   // 'user' ou 'merchant'
-  balance   Decimal  @default(0)
-
-  transfersSent     Transfer[] @relation("PayerRelation")
-  transfersReceived Transfer[] @relation("PayeeRelation")
-}
-
-model Transfer {
-  id        Int      @id @default(autoincrement())
-  value     Decimal
-  payerId   Int
-  payeeId   Int
-  createdAt DateTime @default(now())
-  payer     User     @relation("PayerRelation", fields: [payerId], references: [id])
-  payee     User     @relation("PayeeRelation", fields: [payeeId], references: [id])
 }
 
 // 3. Definição da Tabela (adicione isto no final)
@@ -45,5 +25,13 @@ model User {
   password  String
   userType  String
   balance   Float    @default(0)
+  createdAt DateTime @default(now())
+
+}
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  value     Float
+  payerId   Int
+  payeeId   Int
   createdAt DateTime @default(now())
 }
