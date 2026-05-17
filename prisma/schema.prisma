@@ -15,7 +15,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-//tabela exemplo para db
+
 // 3. Definição da Tabela (adicione isto no final)
 model User {
   id        Int      @id @default(autoincrement())
