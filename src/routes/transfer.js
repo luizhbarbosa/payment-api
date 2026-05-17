@@ -34,7 +34,11 @@ const router = Router();
  *       200:
  *         description: Transferência realizada com sucesso
  *       400:
- *         description: Erro de validação
+ *         description: Erro de validação (valor inválido ou auto-transferência)
+ *       404:
+ *         description: Usuário pagador ou recebedor não encontrado
+ *       500:
+ *         description: Erro interno ou transferência não autorizada
  */
 router.post('/', makeTransferController);
 

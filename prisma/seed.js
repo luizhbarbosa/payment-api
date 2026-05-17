@@ -9,6 +9,10 @@ async function main() {
   try {
     await prisma.transfer.deleteMany();
     await prisma.user.deleteMany();
+
+    // ✅ Garante que os IDs voltem a começar do 1 no MySQL
+    await prisma.$executeRaw`ALTER TABLE User AUTO_INCREMENT = 1;`;
+    await prisma.$executeRaw`ALTER TABLE Transfer AUTO_INCREMENT = 1;`;
   } catch (e) {
     console.log('Aviso: Tabelas ainda não existem ou já estão limpas.');
   }
