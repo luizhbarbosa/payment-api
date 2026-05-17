@@ -1,4 +1,4 @@
-import prisma from '../prismaClient.cjs';
+import prisma from '../prismaClient.js';
 import userRepository from '../repositories/UserRepository.js';
 import { UserType } from '../models/User.js';
 import authorizerService from './AuthorizerService.js';
