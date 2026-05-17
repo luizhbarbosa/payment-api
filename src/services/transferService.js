@@ -10,8 +10,11 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
   if (payerId === payeeId) throw new Error('Não é possível transferir para você mesmo');
 
   // ✅ CORREÇÃO: usar await
+  console.log(`[DEBUG] Tentando transferência: PayerID: ${payerId}, PayeeID: ${payeeId}, Valor: ${value}`);
+
   const payer = await userRepository.findById(payerId);
   const payee = await userRepository.findById(payeeId);
+  console.log(`[DEBUG] Resultado busca - Payer: ${!!payer}, Payee: ${!!payee}`);
 
   if (!payer) {
     const error = new Error('Usuário pagador não encontrado');
@@ -63,6 +66,8 @@ export const makeTransfer = async ({ value, payer: payerId, payee: payeeId }) =>
 
       // ✅ CORREÇÃO: usar tx + await
       await tx.transaction.create({
+      // ✅ Garantindo que o nome do modelo seja 'transfer' como no seu seed
+      await tx.transfer.create({
         data: {
           value,
           payerId,
