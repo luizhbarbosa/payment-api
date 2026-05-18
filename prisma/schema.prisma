@@ -1,11 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["windows"]
 }
 
 datasource db {
@@ -19,21 +18,15 @@ model User {
   document  String   @unique
   email     String   @unique
   password  String
-  userType  String   // 'user' ou 'merchant'
-  balance   Decimal  @default(0)
-
-  transfersSent     Transfer[] @relation("PayerRelation")
-  transfersReceived Transfer[] @relation("PayeeRelation")
+  userType  String
+  balance   Float    @default(0)
+  createdAt DateTime @default(now())
 }
 
-model Transfer {
+model Transaction {
   id        Int      @id @default(autoincrement())
-  value     Decimal
+  value     Float
   payerId   Int
   payeeId   Int
   createdAt DateTime @default(now())
-  payer     User     @relation("PayerRelation", fields: [payerId], references: [id])
-  payee     User     @relation("PayeeRelation", fields: [payeeId], references: [id])
 }
-
-// 3. Definição da Tabela (adicione isto no final)

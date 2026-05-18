@@ -1,8 +1,6 @@
-// src/controllers/transferController.js
-import { makeTransfer } from '../services/transferService.js';
+import { transferMoney } from '../services/transferService.js';
 
 export const makeTransferController = async (req, res, next) => {
-  // ✅ Força a conversão para número para evitar erros de tipo vindo do Swagger/CURL
   const value = Number(req.body.value);
   const payer = Number(req.body.payer);
   const payee = Number(req.body.payee);
@@ -26,8 +24,17 @@ export const makeTransferController = async (req, res, next) => {
   }
 
   try {
-    const result = await makeTransfer({ value, payer, payee }); // ✅ corrigido
-    return res.status(200).json(result);
+    const result = await transferMoney({
+      value,
+      payer,
+      payee
+    });
+
+    return res.status(201).json({
+      message: 'Transferência realizada com sucesso!',
+      data: result
+    });
+
   } catch (error) {
     return next(error);
   }
