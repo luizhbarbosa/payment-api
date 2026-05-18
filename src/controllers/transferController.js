@@ -1,5 +1,4 @@
-// src/controllers/transferController.js
-import { makeTransfer } from '../services/transferService.js';
+import { transferMoney } from '../services/transferService.js';
 
 export const makeTransferController = async (req, res, next) => {
   const value = Number(req.body.value);
@@ -25,16 +24,15 @@ export const makeTransferController = async (req, res, next) => {
   }
 
   try {
-    const result = await makeTransfer({ value, payer, payee });
+    const result = await transferMoney({
+      value,
+      payer,
+      payee
+    });
 
     return res.status(201).json({
       message: 'Transferência realizada com sucesso!',
-      data: {
-        payer,
-        payee,
-        transactionId: result.id,
-        value
-      }
+      data: result
     });
 
   } catch (error) {
