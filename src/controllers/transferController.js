@@ -22,16 +22,21 @@ export const createTransfer = async (req, res) => {
         });
     }
 
-    try {
-        // Chama o serviço que você criou para processar a lógica no banco
-        const result = await transferMoney({ value, payer, payee });
-        
-        return res.status(201).json({
-            message: "Transferência realizada com sucesso!",
-            data: result
-        });
-    } catch (error) {
-        console.error("Erro no Controller:", error.message);
-        return res.status(400).json({ error: error.message });
-    }
+     try {
+    // Chama o serviço para processar no banco
+    const result = await transferMoney({ value, payer, payee });
+    
+    return res.status(201).json({
+        message: "Transferência realizada com sucesso!",
+        data: {
+            message: "Transferência realizada com sucesso", // Mantém o padrão que o PowerShell leu
+            payer: payer,  // ID do pagador
+            payee: payee,  // ID do recebedor
+            transactionId: result.id, // Opcional: ID da transação criada
+            value: value
+        }
+    });
+} catch (error) {
+
 };
+}
